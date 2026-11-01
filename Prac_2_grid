@@ -1,0 +1,47 @@
+
+# Model-Based Intelligent Agent
+
+grid = [
+    [0, 0, 1, 0],
+    [1, 0, 1, 0],
+    [0, 0, 0, 0],
+    [0, 1, 1, 0]
+]
+
+start = (0, 0)
+goal = (0, 0)
+
+visited = set()
+queue = [(start, [start])]
+
+while queue:
+    position, path = queue.pop(0)
+
+    if position in visited:
+        continue
+
+    visited.add(position)
+
+    print("Agent at:", position)
+
+    if position == goal:
+        print("Goal Reached!")
+        print("Path:", path)
+        break
+
+    x, y = position
+
+    directions = [
+        (x+1, y),
+        (x, y+1),
+        (x-1, y),
+        (x, y-1)
+    ]
+
+    for nx, ny in directions:
+        if 0 <= nx < 4 and 0 <= ny < 4:
+            if grid[nx][ny] == 0 and (nx, ny) not in visited:
+                queue.append(((nx, ny), path + [(nx, ny)]))
+
+else:
+    print("Goal not reachable")
